@@ -2,7 +2,6 @@
 title: "quiz1"
 author: "Tianyi"
 date: "2023-02-17"
-output: html_document
 ---
 
 # code snippets that answers quiz 1 week 1 R Programming JHK Coursera questions

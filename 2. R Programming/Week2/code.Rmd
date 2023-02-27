@@ -1,0 +1,23 @@
+
+This is the second week of the course R Programming
+### Author: Tianyi Ma
+
+# Getting the mean of one pollutant over a subset of monitors
+
+```{r}
+pollutantmean <- function(directory, pollutant, id = 1:332) {
+  all_data <- c()
+  for (i in id) {
+    id_str <- as.character(i)
+    while (i < 100) {
+      i <- i * 10
+      id_str <- paste("0", id_str, sep="")
+    }
+    data <- read.csv(paste(directory, id_str, '.csv', sep=""))
+    all_data <- rbind(all_data, data[, pollutant])
+  }
+  mean(all_data, na.rm=TRUE)
+}
+
+pollutantmean('./specdata/', 'sulfate', 1:1)
+```

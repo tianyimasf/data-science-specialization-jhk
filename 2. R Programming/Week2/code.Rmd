@@ -21,3 +21,55 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
 
 pollutantmean('./specdata/', 'sulfate', 1:1)
 ```
+
+# Getting number of complete cases for each of of the indicated monitors
+
+```{r}
+complete <- function(directory, id = 1:332) {
+  df <- data.frame(matrix(ncol = 2, nrow = 0))
+  colnames(df) <- c('id', 'nobs')
+  
+  for (i in id) {
+    id_str <- as.character(i)
+    i_copy <- i
+    while (i_copy < 100) {
+      i_copy <- i_copy * 10
+      id_str <- paste("0", id_str, sep="")
+    }
+    data <- read.csv(paste(directory, id_str, '.csv', sep=""))
+    nobs <- sum(complete.cases(data[c('sulfate', 'nitrate')]))
+    df[nrow(df) + 1,] <- list(i, nobs)
+  }
+  df
+}
+
+complete('./specdata/', 1:2)
+```
+
+# Getting correlations of sulfate and nitrate where complete cases is larger than specified threshold
+
+```{r}
+corr <- function(directory, threshold) {
+  sol <- numeric()
+  
+  for (i in 1:332) {
+    id_str <- as.character(i)
+    while (i < 100) {
+      i <- i * 10
+      id_str <- paste("0", id_str, sep="")
+    }
+    data <- read.csv(paste(directory, id_str, '.csv', sep=""))
+    nobs <- sum(complete.cases(data[c('sulfate', 'nitrate')]))
+    correlation <- 0
+    if (nobs > threshold) {
+      completecases = complete.cases(data[c('sulfate', 'nitrate')])
+      data <- data[completecases,]
+      correlation <- cor(data$sulfate, data$nitrate)
+    }
+    sol <- append(sol, correlation)
+  }
+  sol
+}
+
+corr('./specdata/', 400)[1:10]
+```

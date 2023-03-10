@@ -1,0 +1,22 @@
+# Quiz Week 3
+
+### Q1
+
+```{r}
+library(datasets)
+data(iris)
+virginica <- iris[which(iris$Species == 'virginica'), ]
+mean(virginica$Sepal.Length, rm.na = TRUE) #6.588
+```
+
+### Q4
+
+```{r}
+library(datasets)
+data(mtcars)
+cyl_4 <- mtcars[which(mtcars$cyl == 4), ]
+mean_4 <- mean(cyl_4$hp, rm.na = TRUE)
+cyl_8 <- mtcars[which(mtcars$cyl == 8), ]
+mean_8 <- mean(cyl_8$hp, rm.na = TRUE)
+mean_8 - mean_4  #126.5779
+```

@@ -45,5 +45,5 @@ rankall <- function(outcome, num = "best") {
   
   ## Return a data frame with the hospital names and the
   ## (abbreviated) state name
-  c(hospital = info, state = names(info))
+  data.frame(hospital = info, state = names(info))
 }
